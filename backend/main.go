@@ -9,7 +9,7 @@ import (
 func main(){
 	router := gin.Default()
 
-	router.GET("/dog", func(c *gin.Context){
+	router.GET("/api/dog", func(c *gin.Context){
 
 		pictureUrl, err := GetPicture()
 		if(err != nil){
