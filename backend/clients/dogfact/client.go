@@ -21,7 +21,15 @@ type attributesData struct{
 	Body string `json:"body"`
 }
 
-func GetFact(ctx context.Context) (string, error){
+type Client struct{
+	httpClient *http.Client
+}
+
+func NewClient(c *http.Client) *Client{
+	return &Client{httpClient: c}
+}
+
+func (c Client) GetFact(ctx context.Context) (string, error){
 	url := "https://dogapi.dog/api/v2/facts?limit=1"
 
 
@@ -31,7 +39,7 @@ func GetFact(ctx context.Context) (string, error){
 		return "", fmt.Errorf("error : %w", err)
 	}
 
-	client := &http.Client{}
+	client := c.httpClient
 	response, err := client.Do(req)
 	
 	if err != nil{

@@ -22,16 +22,22 @@ func main(){
 
 		ctx := c.Request.Context()
 
+		client := &http.Client{}
+
+		picClient := dogpic.NewClient(client)
+		factClient := dogfact.NewClient(client)
+		
+
 		chPic := make (chan response, 1)
 		chFact := make (chan response, 1)
 
 		go func(){
-			pictureUrl, err := dogpic.GetPicture(ctx)
+			pictureUrl, err := picClient.GetPicture(ctx)
 			chPic <- response{res: pictureUrl, err: err}
 		}()
 
 		go func(){
-			fact, err := dogfact.GetFact(ctx)
+			fact, err := factClient.GetFact(ctx)
 			chFact <- response{res: fact, err: err}
 		}()
 
