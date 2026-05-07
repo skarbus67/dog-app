@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dog site</title>
+</head>
+
+<body>
+
+    <button id="btn">get dog data</button>
+    <p id="fact">fact here</p>
+    <img id="photo" src="" alt="photo here">
+    
+    <script>
+        const btn = document.getElementById('btn');
+        const fact = document.getElementById('fact')
+        const photo = document.getElementById('photo')
+
+        async function getAndDisplayData() {
+            btn.disabled = true
+            fact.textContent = "loading fact"
+            photo.src = ""
+            photo.alt = "loading photo"
+
+            try {
+                const response = await fetch('http://localhost:8080/api/dog');
+                
+                if (!response.ok) {
+                    throw new Error(`http error, status code: ${response.status}`);
+                }
+            
+                const data = await response.json();
+
+                displayData(data);
+
+            } catch (error) {
+                console.error('error :', error);
+                displayError()
+            }
+            finally{
+                btn.disabled = false
+            }
+        }
+
+        function displayError(){
+            fact.textContent = "error"
+            photo.src = ""
+            photo.alt = "error"
+        }
+
+        function displayData(data) {
+            fact.textContent = data.fact
+            photo.src = data.url
+        }
+
+        btn.addEventListener('click', getAndDisplayData);
+    </script>
+</body>
+
+</html>
