@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 	"github.com/gin-gonic/gin"
+	"dog-app/clients/dogfact"
+	"dog-app/clients/dogpic"
 )
 
 func main(){
@@ -13,7 +15,7 @@ func main(){
 
 	router.GET("/api/dog", func(c *gin.Context){
 
-		pictureUrl, err := GetPicture()
+		pictureUrl, err := dogpic.GetPicture()
 		if(err != nil){
 			log.Printf("critical error : %v", err)
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -22,7 +24,7 @@ func main(){
 			return
 		}
 
-		fact, err := GetFact()
+		fact, err := dogfact.GetFact()
 		if(err != nil){
 			log.Printf("critical error : %v", err)
 			c.JSON(http.StatusInternalServerError, gin.H{

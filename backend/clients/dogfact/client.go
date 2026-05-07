@@ -1,4 +1,4 @@
-package main
+package dogfact
 
 import (
 	"encoding/json"
@@ -7,16 +7,16 @@ import (
 )
 
 type factApiResponse struct{
-	Data []FactData `json:"data"`
+	Data []factData `json:"data"`
 }
 
-type FactData struct{
+type factData struct{
 	ID string `json:"id"`
 	Type string `json:"type"`
-	Attributes AttributesData `json:"attributes"`
+	Attributes attributesData `json:"attributes"`
 }
 
-type AttributesData struct{
+type attributesData struct{
 	Body string `json:"body"`
 }
 

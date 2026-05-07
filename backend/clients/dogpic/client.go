@@ -1,4 +1,4 @@
-package main
+package dogpic
 
 import (
 	"encoding/json"
