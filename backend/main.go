@@ -9,6 +9,8 @@ import (
 func main(){
 	router := gin.Default()
 
+	router.LoadHTMLGlob("../frontend/*")
+
 	router.GET("/api/dog", func(c *gin.Context){
 
 		pictureUrl, err := GetPicture()
@@ -34,6 +36,9 @@ func main(){
 			"fact": fact,
 		})
 	})
+
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "main.html", nil)})
 
 router.Run(":8080")
 }
