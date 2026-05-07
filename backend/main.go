@@ -20,16 +20,18 @@ func main(){
 
 	router.GET("/api/dog", func(c *gin.Context){
 
+		ctx := c.Request.Context()
+
 		chPic := make (chan response, 1)
 		chFact := make (chan response, 1)
 
 		go func(){
-			pictureUrl, err := dogpic.GetPicture()
+			pictureUrl, err := dogpic.GetPicture(ctx)
 			chPic <- response{res: pictureUrl, err: err}
 		}()
 
 		go func(){
-			fact, err := dogfact.GetFact()
+			fact, err := dogfact.GetFact(ctx)
 			chFact <- response{res: fact, err: err}
 		}()
 

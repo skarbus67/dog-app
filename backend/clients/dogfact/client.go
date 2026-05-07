@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"context"
 )
 
 type factApiResponse struct{
@@ -20,11 +21,19 @@ type attributesData struct{
 	Body string `json:"body"`
 }
 
-func GetFact() (string, error){
+func GetFact(ctx context.Context) (string, error){
 	url := "https://dogapi.dog/api/v2/facts?limit=1"
 
-	response, err := http.Get(url)
 
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+
+	if err != nil{
+		return "", fmt.Errorf("error : %w", err)
+	}
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	
 	if err != nil{
 		return "", fmt.Errorf("failed fetching the dog fact : %w", err)
 	}
